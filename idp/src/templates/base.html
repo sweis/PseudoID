@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+  <title>{% block title %} Tiresias: Private OpenID {% endblock %}</title>
+  <link rel="openid2.provider openid.server"
+        href="{{ request_url_without_params }}" />
+  <link href="/static/base.css" rel="stylesheet" type="text/css"/>
+  <script type="text/javascript" src="/static/js/jsbn/jsbn.js"></script>
+  <script type="text/javascript" src="/static/js/jsbn/jsbn2.js"></script>
+  <script type="text/javascript" src="/static/js/jsbn/prng4.js"></script>
+  <script type="text/javascript" src="/static/js/jsbn/rng.js"></script>
+  <script type="text/javascript" src="/static/js/jsbn/base64.js"></script>
+  <script type="text/javascript" src="/static/js/sha1.js"></script>
+  <script type="text/javascript" src="/static/js/blinder/blinder.js"></script>
+  <script type="text/javascript" src="/static/js/blinder/blinder-cookie.js"></script>
+  {% block head %}{% endblock %}
+</head>
+
+<body {% block bodyattributes %}{% endblock %}>
+
+{% block header %}
+<div id="header">
+  <img id ="openid-logo" alt="OpenID" src="/static/openid-logo.png" />
+  <p id="title">Tiresias: Private OpenID
+  </p>
+</div>
+{% endblock %}
+
+<div id="body">
+  {% block body %}{% endblock %}
+</div>
+
+</body>
+</html>

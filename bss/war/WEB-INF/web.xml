@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" version="2.5">
+  <servlet>
+    <servlet-name>Sign</servlet-name>
+    <servlet-class>net.pseudoid.servlets.SignServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Sign</servlet-name>
+    <url-pattern>/sign</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>Verify</servlet-name>
+    <servlet-class>net.pseudoid.servlets.VerifyServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Verify</servlet-name>
+    <url-pattern>/verify</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>CookieChecker</servlet-name>
+    <servlet-class>net.pseudoid.servlets.CookieCheckerServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CookieChecker</servlet-name>
+    <url-pattern>/checkcookie</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>CookieSetter</servlet-name>
+    <jsp-file>cookie-setter.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CookieSetter</servlet-name>
+    <url-pattern>/setcookie</url-pattern>
+  </servlet-mapping>
+  
+	<welcome-file-list>
+		<welcome-file>main.jsp</welcome-file>
+	</welcome-file-list>
+</web-app>

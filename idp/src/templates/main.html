@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block body %}
+<p style="color:red">WARNING: Under development. Not ready for actual use.</p>
+
+<p>
+You can use this private identity provider to anonymously log into any 
+website that supports <nobr><a href="http://openid.net/">
+ <img src="/static/openid-icon.png"/>OpenID</a></nobr>! 
+ Just follow these simple steps.
+</p>
+
+<ol>
+  <li> Create a nickname or pseudonym at the 
+    <a href="http://blind-signer.appspot.com">Tiresias Blind Signer</a>.
+  </li>
+  
+  <li> Visit any OpenID-enabled website and enter 
+<span class="url">{{ request_url_without_path }}/server</span> as your OpenID. Try these:
+    <ul>
+      <li><a href="http://www.puffypoodles.com/">Puffypoodles</a>: 
+          Google Step2 Demo
+      </li>
+      <li>
+        <a href="http://openidenabled.com/python-openid/trunk/examples/consumer/">
+          JanRain Consumer</a>: Python OpenID Example Consumer
+       </li>
+      <li><a href="http://www.plaxo.com/openid">Plaxo</a>: 
+          Social Networking Site
+      </li>
+    </ul>
+  </li>
+  
+  <li>
+    You're Done! You'll be logged in under your nickname.
+  </li>
+</ol>
+
+<div class="top">
+  How It Works
+</div>
+
+<p> 
+  The Tiresias private identity provider authenticates users anonymously by
+  piggbyacking on the Tiresias blind signer.
+    
+    When you create a nickname at the blind signer, you are asked to login
+  normally using your google account. Once the blind signer knows that you are
+  a valid user, it issues you an access token with your chosen nickname.
+  
+    The token is blindly signed by the signer such that Tiresias will later
+  recognize it as being created by a valid user, but will not be able to tell
+  <i>which</i> user created the token.
+</p>
+
+{% endblock %}

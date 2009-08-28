@@ -1,0 +1,20 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Set Cookie</title>
+    <script type="text/javascript">
+    <!--
+      var exp = new Date(); // now
+      exp.setHours(exp.getHours()+1); // default set to expire in an hour
+      document.cookie = "tiresias="+escape(location.hash.slice(1)) + 
+                        "; expires="+exp.toUTCString();
+    //-->
+    </script>
+  </head>
+  <body>
+  This page sets a cookie with the value obtained 
+  from the fragment identifier (#).
+  </body>
+</html>

@@ -5,7 +5,7 @@
 
 <html>
   <head>
-    <title>Tiresias: Blind Signer</title>
+    <title>PseudoID: Blind Signer</title>
     <link type="text/css" rel="stylesheet" href="css/main.css" />
     <script type="text/javascript" src="js/jsbn/jsbn.js"></script>
     <script type="text/javascript" src="js/jsbn/jsbn2.js"></script>
@@ -32,9 +32,9 @@
       </div>
 
   <p>
-    Welcome to Tiresias, the blind signer. Here you can generate an access token
+    Welcome to the PseudoID blind signer. Here you can generate an access token
     for anonymous logging into OpenID-enabled websites. Simply select a nickname
-    that you wish to use on these sites and Tiresias will generate a token:
+    that you wish to use on these sites and PseudoID will generate a token:
   </p>
 
     <h1>Generate an Access Token</h1>

@@ -5,7 +5,7 @@
 
 <html>
   <head>
-    <title>Tiresias: Blind Signer</title>
+    <title>PseudoID: Blind Signer</title>
   </head>
   <body>
     <a href="main.jsp">Home</a>

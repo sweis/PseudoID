@@ -1,46 +1,9 @@
 #!/usr/bin/python
-#
-# Copyright 2006 Google Inc.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#      http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
 
 """
-An OpenID Provider. Allows Google users to log into OpenID servers using
-their Google Account.
+A private OpenID provider implementation.
 
-Part of http://code.google.com/p/google-app-engine-samples/.
-
-For more about OpenID, see:
-  http://openid.net/
-  http://openid.net/about.bml
-
-Uses JanRain's Python OpenID library, version 1.2.0, licensed under the
-Apache Software License 2.0:
-  http://openidenabled.com/python-openid/
-
-It uses version 1.2.0 (included here), not a later version, because this app
-was originally written a long time ago when 1.2.0 was the latest version
-available. Porting to 2.1.1 or later should be straightforward.
-
-The JanRain library includes a reference OpenID consumer that can be used to
-test this provider. After starting the dev_appserver with this app, unpack the
-JanRain library and run these commands from its root directory:
-
-  setenv PYTHONPATH .
-  python ./examples/consumer.py -s localhost
-
-Then go to http://localhost:8001/ in your browser, type in
-http://localhost:8080/myname as your openid identifier, and click Verify.
+@author arkajit.dey@gmail.com (Arkajit Dey)
 """
 
 import logging

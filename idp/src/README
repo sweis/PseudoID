@@ -10,13 +10,20 @@ For more about OpenID, see:
 Uses JanRain's Python OpenID library, version 2.2.4, licensed under the 
 Apache Software License 2.0:
   http://openidenabled.com/python-openid/
+  
+To run the private IDP, run the dev_appserver on the project directory (which
+contains the app.yaml file):
+
+python path/to/dev_appserver.py path/to/project/src/ --port 9999
+
+The IDP's front page has further directions on how to login under a created
+nickname.
 
 The JanRain library includes a reference OpenID consumer that can be used to
-test this provider. After starting the dev_appserver with this app, unpack the
-JanRain library and run these commands from its root directory:
+test this provider. That consumer is included here for your convenience. To run
+the sample consumer run
 
-  setenv PYTHONPATH .
-  python ./examples/consumer.py -s localhost
+  python src/consumer.py --port 8001
 
 Then go to http://localhost:8001/ in your browser, type in
-http://localhost:8080/server as your openid identifier, and click Verify.
+http://localhost:9999/server as your openid identifier, and click Verify.

@@ -4,6 +4,7 @@
 \usepackage{pgfpages}
 \pgfpagesuselayout{4 on 1}[letterpaper,landscape,border shrink=5mm]
 
+\usepackage{verbatim} % for block comments
 %\usepackage{beamerthemesplit} % Activate for custom appearance
 
 \mode<presentation>
@@ -110,6 +111,17 @@
 
 \section{The Solution}
 
+\begin{frame}{Overview of PseudoID}
+  \begin{itemize}
+    \item Adds a new party: blind signature service (BSS)
+    \item Two-phase login
+      \begin{itemize}
+        \item Setup Phase with BSS: one-time, get access token (AT)
+        \item Signon Phase with IDP: use access token
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
 \subsection{Blind Signature Service}
 
 \begin{frame}{Blind Signatures}
@@ -125,7 +137,7 @@ signer.
 \begin{definition}[Blind Signature Schemes]
 The provider of a message $m$ uses an pair of \emph{blinding} and
 \emph{unblinding} functions $(B,B^{-1})$ that only he knows. The functions
-satisfy $B^{-1}(S(B(m))) = S(m).$
+satisfy $B^{-1}(\sigma(B(m))) = \sigma(m).$
 \end{definition}
 
 \end{frame}
@@ -152,9 +164,21 @@ satisfy $B^{-1}(S(B(m))) = S(m).$
   \end{figure}
 \end{frame}
 
+\begin{frame}{Blind Signer Setup Steps}
+  \begin{alertblock}{Blind Signer Setup Protocol}
+    \begin{enumerate}
+      \item<1-> User authenticates normally.
+      \item<2-> User sends BSS a blind token to sign.
+      \item<3-> BSS signs token and returns it.
+      \item<4-> User unblinds the blind signed token, gets valid, untraceable
+access token (AT).
+    \end{enumerate}
+  \end{alertblock}
+\end{frame}
+
 \subsection{Private Identity Provider}
 
-\begin{frame}{Objectives}
+\begin{frame}{Objectives for a Private IDP}
   \begin{itemize}
     \item<1-> Persistent ownable pseudonym
     \item<2-> Pseudonym unlinkable with real identity

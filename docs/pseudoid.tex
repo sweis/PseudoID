@@ -33,7 +33,8 @@ Internet users often manage login credentials for many accounts across
 multiple web sites. This is both an inconvenience and a potential
 security risk, as users often resort to reusing passwords. Users also
 become accustomed to typing usernames and passwords in many different
-interfaces, which makes them more susceptible to phishing.
+interfaces, making them more susceptible to phishing, that is, having
+their credentials stolen by spoofed websites.
 
 This has led to several efforts to create web single sign-on (SSO)
 systems. One SSO model is for users to have a single \emph{identity
@@ -47,29 +48,24 @@ Some proposals, such as Microsoft Passport (now Windows Live ID)
 centralized IDP. Other systems, such as OpenID \cite{OID}, allow users
 to have identities from among a federation of IDPs. Federated login
 systems like OpenID offer more flexibility to end users, since they
-are able to chose their own identity provider. Large webmail providers
-like Yahoo, Google, and MSN have all adopted OpenID
+are able to choose among many identity providers. Large webmail
+providers like Yahoo, Google, and MSN have all adopted OpenID
 \cite{YOP,Sac08,WLOP08} and are capable of serving as identity
 providers for hundreds of millions of users.
 
 While federated login systems like OpenID have the prospect of making
 logins less cumbersome, they may negatively impact user privacy. The
-core problem is that all of a user's logins to relying web sites must
-flow through their identity provider. A user's IDP can easily link
-together the various websites that the user visits. An abusive IDP
-could, for example, sell a list of all the RP's that their users
-logged into without their consent.
+core problem in both centralized and federated login systems is that
+all of a user's logins to relying web sites must flow through their
+identity provider. A user's IDP can easily link together the various
+websites that the user visits. An abusive IDP could, for example, sell
+a list of all the RP's that their users logged into without their
+consent.
 
-Since it is a federated system, users could avoid identity providers
-that abused privacy and use reputable firms. Unfortunately, identity
-providers may be \emph{honest but compliant} and be compelled to
-reveal identifying information by local laws. Identity providers could
-attempt to anonymize logs. Ex post facto anonymization has proven
-difficult in practice. Supposedly anonymized logs released by AOL
-\cite{BarZel06} and Netflix \cite{NaSh08} were both de-anonymized to
-some extent. Logs destruction may be prohibited by local laws
-specifying a minimum retention period \cite{EUDir}.
-%TODO(arkajit): may need a better ref for EU directive, explore further
+In a federated system, users could avoid identity providers
+that abused privacy and choose to use reputable firms. Unfortunately,
+honest identity providers may still be compromised and leak logs, or
+otherwise be compelled to reveal logs.
 
 Besides simply revealing which sites a user visits, IDPs often reveal
 personal information about users through extensions like OpenID
@@ -79,9 +75,9 @@ information like an email address, real name, or birthdate from an
 identity provider to a web site. Automatically obtaining these data
 can greatly streamline the user sign-up process for relying parties.
 
-Although most IDPs will prompt a user whether they want to reveal this
-information, they could reveal whichever data they want to an
-RP. Thus, there is no way for a user to \emph{selectively disclose}
+Although most IDPs will prompt users whether they want to reveal this
+information, they could reveal whichever data they want to a relying
+party. Thus, there is no way for a user to \emph{selectively disclose}
 certain properties (e.g. age, gender, etc.) about themselves to an
 RP. Much work has gone into developing cryptographic schemes for
 selective disclosure \cite{CaLy01,CaLy04,CHL05,CaGr08}, but these have
@@ -101,14 +97,6 @@ signature service that allows users to generate a digital pseudonym
 under which they can logon to a RP, but which cannot be linked back to
 their true identity. Additional services are provided to support
 selective disclosure of user properties.
-
-%To make the user experience more seamless, we propose making the
-%IDP's role as invisible as possible by designing a client application
-%with a simple interface for users to control their identity
-%settings. The application will deal with the IDP and intercept RP
-%requests as needed to present the abstraction that the user is
-%dealing with the RP as he normally does with a website.
-
 
 \section{Federated Login Overview}
 \label{sec:fedlogin}
@@ -140,18 +128,17 @@ carries a burden for the user, which can lead to password reuse.
 \end{figure}
 
 Federated login systems, on the other hand, extract authentication as
-a service in its own right. Just as a website may rely on calls to
-third-party sites services such traffic analytics, CAPTCHA
-verification, or file hosting, it could also rely on a separate
-service for authentication.
+a service in its own right. Just as websites rely on third-party services
+for traffic analysis, CAPTCHA verification, or file hosting, they can
+also rely on separate services for authentication.
 
 Federated login adds a third party to the interaction between the user
 and the website: the \emph{identity provider} (IDP). Instead of
-authenticating himself to the website directly, the user authenticates
-herself to the IDP which returns an identifier to the website with
-which it can refer to the user. The website is often referred to as
-the \emph{relying party} (RP) since it relies on the identity provider
-for authentication.
+authenticating herself to the website directly, the user authenticates
+herself to the IDP. The IDP then returns a user identifier to the
+website. Thus, the website is often referred to as the \emph{relying
+  party} (RP) since it relies on the identity provider for
+authentication.
 
 \begin{figure}
   \centering
@@ -200,65 +187,6 @@ user data for multiple websites. This not only makes them more
 appealing targets to attackers, but also more acutely responsible for
 safeguarding user privacy.
 
-\subsection{Privacy Concerns in Federated Login}
-
-In federated login systems, users entrust identity providers to manage their
-identity, so privacy concerns may seem relatively minor. After all, in OpenID
-and most other major single sign-on systems, a malicious identity provider could
-easily impersonate users to relying parties. However, even if an identity
-provider is not corrupt, there are privacy concerns for
-\emph{honest, but retentive} providers who may be forced to reveal log data.
-
-The core privacy issue with the widely-deployed federated login systems are that
-a user's identity can be correlated with the sites they log into. For example,
-OpenID identity providers will authenticate users, then redirect them directly
-back to a relying party. This makes it trivial to track all the relying parties
-a user logs into. This is the same case for Live ID or Facebook Connect; the
-identity provider knows all the sites a user logs into.
-
-One might develop a different federated login flow where a user acted as an
-intermediary between relying parties and identity providers. The user could
-avoid passing any information about the specific relying party to the identity
-provider. In this case, the identity provider might return an anonymized
-identifier via the user to the relying party. However, if the provider colluded
-with the relying party, they could link the user's real identity with the
-account on the RP. \emph{SW: Maybe add this as one of our strawmen.}
-
-The identity provider could try to avoid logging federated login data, could
-anonymize logs ex post facto, or could simply destroy logs. Each of these
-approaches has difficulties in practice. Avoiding logging user data in the first
-place may seem to be an obvious solution, but that eliminates the analytic
-benefits to logging. Large providers may also inadvertently log information at
-other layers which could ultimately be correlated to federated logins. Providers
-would need to ensure they are not logging linkable data anywhere.
-
-Ex post facto anonymization or logs destruction would also require vigilance by
-the provider. Researchers have also been able to de-anonymize supposedly
-anonymous data sets in the past \cite{BarZel06,NaSh08}. Some jurisdictions may
-require internet providers to retain logs for a minimum period.
-
-Given these considerations, we will focus on privacy in a setting where:
-(1) identity providers are unable to assure that logs are not retained, and
-(2) identity providers may be compelled to reveal logs at some time.
-
-There are several real-world scenarios where \emph{honest, but retentive}
-identity providers may threaten user privacy. One is simply if the provider were
-compromised and logs were leaked by an attacker. This could reveal embarrassing
-information about their users, e.g. ``Bob is a frequent visitor of
-\emph{puffypoodles.com}''.
-
-Another risk is for providers operating in jurisdictions that may subpoena logs
-for political reasons. For instance, a provider operating in the Republic of
-Elbonia might be compelled to reveal all the users who logged into
-\emph{FreeElbonia.com}. Even if the identity provider did not keep the relying
-party's name in the logs, joining the logs of both parties could reveal the
-user's identity.
-
-Because of these risks, identity providers may have an interest in \emph{not}
-being able to link a particular user's identity to logins on a particular
-relying party.
-
-SW: still more to write here.
 
 \subsection{OpenID: A web-based federated login system}
 
@@ -272,8 +200,6 @@ and then returns the user to the RP with either a positive or negative
 assertion that the user owns the claimed identitfier. If the RP
 receives a positive assertion from the IDP, it may allow the user to
 enter the site under the name of the claimed identifier.
-
-% SW --- Revised down to here ----
 
 With the advent of OpenID 2.0 \cite{OID2}, the protocol also began to support
 the concept of \emph{directed identity} \cite{Cam06} or \emph{private digital
@@ -291,16 +217,101 @@ Cameron's Laws of Identity \cite{Cam06}. And indeed, some OpenID providers like
 Google do return a per site unique identifier rather than a globally unique
 identifier for its users.
 
+\subsection{Privacy Concerns in Federated Login}
+
+In federated login systems, users entrust identity providers to manage their
+identity, so privacy concerns may seem relatively minor. After all, in OpenID
+and most other major single sign-on systems, a malicious identity provider could
+easily impersonate users to relying parties. However, even if an identity
+provider is not corrupt, there are privacy concerns for
+\emph{honest, but retentive} providers who may be forced to reveal log data.
+
+The core privacy issue with widely-deployed federated login systems are that
+a user's identity can be correlated with the sites they log into. For example,
+OpenID identity providers will authenticate users, then redirect them directly
+back to a relying party. This makes it trivial to track all the relying parties
+a user logs into. This is the same case for Live ID or Facebook Connect; the
+identity provider knows all the sites a user logs into.
+
+One might develop a different federated login flow where a user acted as an
+intermediary between relying parties and identity providers. The user could
+avoid passing any information about the specific relying party to the identity
+provider. In this case, the identity provider might return an anonymized
+identifier via the user to the relying party. However, if the provider colluded
+with the relying party, they could link the user's real identity with the
+account on the RP.
+
+An identity provider could abstain from logging, could try to
+anonymize or delete identifying information, or could simply destroy
+logs completely. Logs are retained for many reasons including
+analytics, diagnostics, and security auditing. Abstaining from logging
+is generally not a viable option. 
+
+Removing or anonymizing identifying information ex post facto is one
+option, but has proved difficult in practice. Supposedly anonymized
+logs released by AOL \cite{BarZel06} and Netflix \cite{NaSh08} were
+both de-anonymized to some extent. An identity provider would need to
+be vigilant and thoroughly scrub logs. They would also need to ensure
+that identifying data was not being logged by an unrelated service. 
+
+An added issue is that both logs anonymization and destruction 
+may be subject to data retention laws that specify minimum retention
+periods \cite{EUDir}. IDPs may be legally compelled to collect
+identifying data and retain it for a minimum period.
+
+Given these considerations, we will focus on privacy in a setting where:
+(1) identity providers are unable to assure that logs are not retained, and
+(2) identity providers may be compelled to reveal logs at some time.
+
+There are several real-world risks where \emph{honest, but retentive}
+identity providers may threaten user privacy. One risk is simply if
+the provider were compromised and logs were leaked by an
+attacker. Another risk is for providers operating in jurisdictions
+where logs may be seized without due legal process. 
+
+Because of these risks, identity providers may have an interest in \emph{not}
+being able to link a particular user's identity to logins on a particular
+relying party. An identity provider may want to provably show that
+they cannot link logins on a relying party to a particular user. With
+this in mind, we informally define what it means for an idenity
+provider to be \emph{private} in Section
+\ref{sec:private-fed-login}. Section \ref{sec:pseudoid} propose a
+practical system that meets this definition.
+
 \section{What is Private Federated Login?}
-%TODO: rewrite this section based on discussion, add refs to FakeID, proxies...
+\label{sec:private-fed-login}
 
-Before diving into the description of PseudoID, we first outline a set of goals
-and objectives that a private federated login system should strive to meet. As a
-federated login system is really defined by the behavior of its identity
-providers, we then discuss some types of identity providers that fail to meet
-these objectives.
+Both ``privacy'' and ``federated login'' are loaded terms that carry
+different meanings in different contexts. For the scope of this paper,
+we are going to focus on federated login systems with an OpenID-like
+login flow illustrated in Figure \ref{fig:fedlog}. The relevancy to
+other types of federated login systmes may vary.
 
-\subsection{Objectives}
+We will now define several informal properties of OpenID-like
+federated login systems may or may not satisfy. We then will contrast
+which objectives are satisfied by the status quo and several ``straw
+men'' proposals. Section \ref{sec:pseudoid} will present
+\emph{PseuoID}, which aims to meet all the following properties.
+
+
+\begin{definition}[Consistency]
+\label{def:consistency}
+Users may present credentials to an identity provider such that a 
+consistent identifier will be returned to relying parties over
+multiple sessions.
+\end{definition}
+
+\begin{definition}[Unlinkability]
+\label{def:unlinkability}
+% TODO(sweis)
+
+\end{definition}
+
+\begin{definition}[Abuse-Resistance]
+\label{def:abuse}
+% TODO(sweis)
+\end{definition}
+
 
 %In addition to preventing tracking by the identity provider, there are several
 %other qualities that a privacy-preserving federated login system should

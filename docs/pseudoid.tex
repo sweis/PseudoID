@@ -371,68 +371,68 @@ a system in Section \ref{sec:pseudoid}.
 %components, be reasonably resillient against spammers, and be applicable to any
 %type of federated login system.
 
-A \emph{private federated login} system should try to satisfy the following
-goals:
+%A \emph{private federated login} system should try to satisfy the following
+%goals:
 
-\begin{enumerate}
-  \item \textbf{Consistent Login}: A user should be able to correlate multiple
-  visits to a website with the same alias.
-  \item \textbf{User-Controlled Linkability}: The user alone, and not her IDP or
-  any RPs, should be able to decide whether any two of her aliases on separate
-  RPs should be linked together.
-  \item \textbf{Minimal Trust}: The system should minimize its trusted
-  components. That is, even a malicious IDP or a set of colluding RPs, should
-  not be able to violate the system's guarantees for the user's privacy.
-  \item \textbf{Cheater Resillient}: The system should incorporate some
-  protections against abusive users such as spammers.
-  \item \textbf{Usability}: The system should be as easy to use as possible and
-  try to prevent the user from making any catastrophic errors such as
-  inadvertently revealing her identity.
-\end{enumerate}
+%\begin{enumerate}
+%  \item \textbf{Consistent Login}: A user should be able to correlate multiple
+%  visits to a website with the same alias.
+%  \item \textbf{User-Controlled Linkability}: The user alone, and not her IDP or
+%  any RPs, should be able to decide whether any two of her aliases on separate
+%  RPs should be linked together.
+%  \item \textbf{Minimal Trust}: The system should minimize its trusted
+%  components. That is, even a malicious IDP or a set of colluding RPs, should
+%  not be able to violate the system's guarantees for the user's privacy.
+%  \item \textbf{Cheater Resillient}: The system should incorporate some
+%  protections against abusive users such as spammers.
+%  \item \textbf{Usability}: The system should be as easy to use as possible and
+%  try to prevent the user from making any catastrophic errors such as
+%  inadvertently revealing her identity.
+%\end{enumerate}
 
 %TODO(arkajit): add a point about selective disclosure here? need to flesh that
 %out a bit more...
 
-\subsection{The ``Yes'' Identity Provider}
+% \subsection{The ``Yes'' Identity Provider}
 
-The simplest identity provider is the one who simply authenticates any user who
-asks with a random identifer. While this is ideal for one-time anonymous logins
-to websites, it is really impractical for most users since it fails to offer
-them a consistent identity with which to login. And relying parties suffer as
-well since they accumulate many one-time use accounts that they cannot correlate
-which severely limits their ability to provide a useful service to the user.
-Needless to say, users cannot link identities across multiple websites either.
-Further, such a system imposes no restrictions on would-be spammers and thus
-violates our fourth criterion too.
+% The simplest identity provider is the one who simply authenticates any user who
+% asks with a random identifer. While this is ideal for one-time anonymous logins
+% to websites, it is really impractical for most users since it fails to offer
+% them a consistent identity with which to login. And relying parties suffer as
+% well since they accumulate many one-time use accounts that they cannot correlate
+% which severely limits their ability to provide a useful service to the user.
+% Needless to say, users cannot link identities across multiple websites either.
+% Further, such a system imposes no restrictions on would-be spammers and thus
+% violates our fourth criterion too.
 
-\subsection{The Random Identity Provider}
+% \subsection{The Random Identity Provider}
 
-A slight improvement on the ``Yes'' identity provider is the random IDP which
-does the following. The first time a user visits, it tags them with a random
-identifier and returns it to the relying party. On subsequent visits, the user
-presents his assigned identifier and the identity provider asserts its
-authenticity to the website.
+% A slight improvement on the ``Yes'' identity provider is the random IDP which
+% does the following. The first time a user visits, it tags them with a random
+% identifier and returns it to the relying party. On subsequent visits, the user
+% presents his assigned identifier and the identity provider asserts its
+% authenticity to the website.
 
-This does allow the user to create a consistent persona across multiple RPs, but
-also allows the various RPs to collude to piece together the user's browsing
-history. The IDP, meanwhile, ceases to provide any true service as the user is
-allowed to generate his own arbitrary nicknames to login. In particular, there
-are no protections against two users picking the same nickname and effectively
-sharing an account on the RP.
+% This does allow the user to create a consistent persona across multiple RPs, but
+% also allows the various RPs to collude to piece together the user's browsing
+% history. The IDP, meanwhile, ceases to provide any true service as the user is
+% allowed to generate his own arbitrary nicknames to login. In particular, there
+% are no protections against two users picking the same nickname and effectively
+% sharing an account on the RP.
 
-\subsection{No Identity Provider}
+% \subsection{No Identity Provider}
 
-Finally, the degenerate case is where there is no identity provider at all, i.e.
-the user resorts to the simple traditional per-site login. This is the status
-quo, where the user creates different nicknames (usernames or handles) at each
-website and must remember passwords manually or through a password manager. If
-the user wants to link his identities on two websites, he may decide to choose
-the same nickname on both. But since each site has its own namespace of
-usernames, there is no guarantee that the user ``Alice'' on one site is the same
-as the user ``Alice'' on another site. Moreover, this presents a terrible user
-experience as the user is prone to making privacy-compromising errors. Overall,
-such a setup is not a system at all, is very brittle, and not extensible towards
-new features such as selective disclosure of user attributes to relying parties.
+% Finally, the degenerate case is where there is no identity provider at all, i.e.
+% the user resorts to the simple traditional per-site login. This is the status
+% quo, where the user creates different nicknames (usernames or handles) at each
+% website and must remember passwords manually or through a password manager. If
+% the user wants to link his identities on two websites, he may decide to choose
+% the same nickname on both. But since each site has its own namespace of
+% usernames, there is no guarantee that the user ``Alice'' on one site is the same
+% as the user ``Alice'' on another site. Moreover, this presents a terrible user
+% experience as the user is prone to making privacy-compromising errors. Overall,
+% such a setup is not a system at all, is very brittle, and not extensible towards
+% new features such as selective disclosure of user attributes to relying parties.
 
 \section{PseudoID: A privacy-preserving federated login system}
 \label{sec:pseudoid}

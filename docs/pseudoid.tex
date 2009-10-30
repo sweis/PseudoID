@@ -278,40 +278,85 @@ provider to be \emph{private} in Section
 \ref{sec:private-fed-login}. Section \ref{sec:pseudoid} propose a
 practical system that meets this definition.
 
-\section{What is Private Federated Login?}
+\section{Properties of Private Federated Login}
 \label{sec:private-fed-login}
 
-Both ``privacy'' and ``federated login'' are loaded terms that carry
-different meanings in different contexts. For the scope of this paper,
-we are going to focus on federated login systems with an OpenID-like
-login flow illustrated in Figure \ref{fig:fedlog}. The relevancy to
-other types of federated login systmes may vary.
+For the scope of this paper, we are going to focus on privacy in
+federated login systems with an OpenID-like login flow illustrated in
+Figure \ref{fig:fedlog}. The relevancy to other types of federated
+login systems may vary. 
 
-We will now define several informal properties of OpenID-like
-federated login systems may or may not satisfy. We then will contrast
-which objectives are satisfied by the status quo and several ``straw
-men'' proposals. Section \ref{sec:pseudoid} will present
-\emph{PseuoID}, which aims to meet all the following properties.
+We assume that identity providers have a set of users that can be
+thought of as ``real'' identities. Users may possess credentials which
+are presented to identity providers for authentication. If credentials
+are valid, identity providers will return some identitier to a relying
+party. This identifier may be of any form, i.e. a ``real'' username, a
+pseudoym, a value derived from the credentials, or even a random value.
 
+In order to contrast these different behaviors, we will first state
+several informal properties.
+
+\begin{definition}[One-wayness]
+\label{def:ownership}
+An identity provider is one-way if given a specific identifier,
+attackers have no significant ability to cause identity providers to
+return that value.
+\end{definition}
+
+One-wayness means that users actually ``own'' their identities and
+people cannot imitate them on relying parties. A trivial example of an
+identity provider that is \textit{not} one-way is one where an IDP
+will assert any identity without authorizing the user.  We'll refer to
+this as the ``Yes IDP''. Users of a Yes IDP could log into RPs with
+arbitrary identities, but would not be able to prevent other people
+from using the same identities.
 
 \begin{definition}[Consistency]
 \label{def:consistency}
-Users may present credentials to an identity provider such that a 
-consistent identifier will be returned to relying parties over
-multiple sessions.
+An identity provider is consistent if users may present credentials
+that will return the same identifier over multiple sessions.
 \end{definition}
+
+The consistency property means that users can have long-lived
+identities on relying parties. That is, users can log in as the same
+identity to a relying party any number of times. A trivial
+inconsistent IDP would be one which returned a random value for each
+login, or a ``Random IDP''. Users of a Random IDP would be anonymous
+on relying parties and could not be linked to their real identities,
+but would not be able to establish long-lived accounts on RPs.
 
 \begin{definition}[Unlinkability]
 \label{def:unlinkability}
-% TODO(sweis)
-
+An identity provider is unlinkable if given a transcript of an
+authentication event and a set of users, an attacker has no
+siginificant advantage in distinguishing the user being authenticated.
 \end{definition}
 
-\begin{definition}[Abuse-Resistance]
-\label{def:abuse}
-% TODO(sweis)
-\end{definition}
+Unlinkability is intended to capture the notion that an attacker who
+obtains access logs from an identity provider and relying party should
+not be able to tell which the ``real'' user was logging in.
 
+In practice, OpenID identity providers are generally linkable. An
+attacker obtaining a user's credentials or IDP access logs would be
+able to trivially see which user was assocaited with a particular
+identity on a relying party.
+
+Note that this property is not specific to OpenID or a flaw in the
+OpenID protocol. Instead, it's an artifact of how real world identity
+providers typically authenticate users: with usernames and
+passwords. An attacker seeing a login event by ``Alice'' followed by
+the identity ``Bob'' being returned to a relying party now knows who
+``Bob'' is on that RP.
+
+Thus, an unlinkable relying party must not require any identifying
+information about their real users during the federated login
+protocol. The Yes and Random IDPs mentioned before are in fact
+unlinkable, but are not practical in many use cases since they are
+respectively not one-way or consistent.
+
+A practical unlinable system must be both one-way and consistent, and
+preferably should have an interactive setup. We now will present such
+a system in Section \ref{sec:pseudoid}.
 
 %In addition to preventing tracking by the identity provider, there are several
 %other qualities that a privacy-preserving federated login system should
@@ -568,6 +613,7 @@ mechanism than most other identity providers, but it still participates in
 the same federated login flow outlined in Figure \ref{fig:fedlog}.
 
 \subsection{Caveats}
+\label{subsec:caveats}
 
 %System Caveats: Potential for traffic analysis. Need to manage tokens.
 

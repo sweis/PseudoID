@@ -8,8 +8,8 @@
  */
 
 var pubKey = PublicKey.fromUrl("/pubkey");
-var TESTING = true;
-var HOST = TESTING ? 'http://localhost:9999' : 'http://private-idp.appspot.com';
+var TESTING = false;
+var HOST = TESTING ? 'http://localhost:9999' : 'http://www.pseudoid.net';
 
 function newToken() {
   var tok = pubKey.generateToken($('nick').value);

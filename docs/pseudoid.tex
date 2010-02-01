@@ -43,13 +43,13 @@ systems. One SSO model is for users to have a single \emph{identity
 handles authenticating the user and attesting an identity back to the
 RP.
 
-Some proposals, such as Windows Live ID \cite{MSPass} or Facebook
-Connect \cite{FBConnect}, relied on a centralized IDP. Other systems,
-such as OpenID \cite{OID}, allow users to have identities from among a
+Some proposals, such as Windows Live ID or Facebook
+Connect, relied on a centralized IDP. Other systems,
+such as OpenID, allow users to have identities from among a
 federation of IDPs. Federated login systems like OpenID offer more
 flexibility to end users, since they are able to choose among many
 identity providers. Large webmail providers like Yahoo, Google, and
-MSN have all adopted OpenID \cite{YOP,Sac08,WLOP08} and are capable of
+MSN have all adopted OpenID \cite{Yah08,Sac08,WLOP08} and are capable of
 serving as identity providers for hundreds of millions of users.
 
 While federated login systems like OpenID may streamline logins, they
@@ -166,7 +166,7 @@ for user records.
 \subsection{OpenID: A web-based federated login system}
 
 OpenID is a popular federated login system that we focus on for a
-proof of concept implementaion \cite{OID}. In OpenID, users can claim
+proof of concept implementaion. In OpenID, users can claim
 identifiers in the form of URIs. To login to a website that supports
 OpenID, the user enters his OpenID URI and the RP redirects him to
 his identity provider's page. The IDP authenticates the user through
@@ -634,5 +634,3 @@ PseudoID implementation has.
 \bibliographystyle{splncs03}
 
 \end{document}
-
-% LocalWords:  login OpenID username

@@ -17,13 +17,12 @@ Google Inc., Mountain View, CA, USA 94043}
 \maketitle
 
 \begin{abstract}
-  This paper proposes a privacy-preserving federated login system
-  named \emph{PseudoID}. PseudoID protects both individual user
-  privacy and identity providers data. This system is based on blind
-  digital signatures and is compatible with a popular federated login
-  system named OpenID. We propose several extensions and discuss some
-  of the practical challenges that must be overcome to further protect
-  user privacy.
+  PseudoID is a federated login system that both preserves individual
+  user privacy and protects identity provider data. PseudoID is based
+  on blind digital signatures and is backward-compatible with a popular
+  federated login system named OpenID. We propose several extensions
+  and discuss some of the practical challenges that must be overcome
+  to further protect user privacy in federated login systems.
 \end{abstract}
 
 \section{Introduction}
@@ -32,25 +31,25 @@ Google Inc., Mountain View, CA, USA 94043}
 Internet users often manage login credentials for many accounts across
 multiple web sites. This is both an inconvenience and a potential
 security risk, as users often resort to reusing passwords. Users also
-become accustomed to typing usernames and passwords in many different
+become accustomed to typing user names and passwords in many different
 interfaces, making them more susceptible to phishing, that is, having
-their credentials stolen by spoofed websites.
+their credentials stolen by imposter websites.
 
-This has led to several efforts to create web single sign-on (SSO)
-systems. One SSO model is for users to have a single \emph{identity
-  provider} (IDP) for all logins. Arbitrary web sites may then become
-\emph{relying parties} (RPs), who delegate logins to the IDP. The IDP
-handles authenticating the user and attesting an identity back to the
-RP.
+Issues with managing web login credentials helped motivate efforts to
+create web single sign-on (SSO) systems. One SSO model is for users to
+have a single \emph{identity provider} (IDP) for all logins. Arbitrary
+web sites may then become \emph{relying parties} (RPs), who delegate
+logins to the IDP. The IDP handles authenticating the user and
+attesting an identity back to the RP.
 
-Some proposals, such as Windows Live ID or Facebook
-Connect, relied on a centralized IDP. Other systems,
-such as OpenID, allow users to have identities from among a
-federation of IDPs. Federated login systems like OpenID offer more
-flexibility to end users, since they are able to choose among many
-identity providers. Large webmail providers like Yahoo, Google, and
-MSN have all adopted OpenID \cite{Yah08,Sac08,WLOP08} and are capable of
-serving as identity providers for hundreds of millions of users.
+Some proposals, such as Windows Live ID or Facebook Connect, relied on
+a centralized IDP. Other systems, such as OpenID, allow users to have
+identities from among a federation of IDPs. Federated login systems
+like OpenID offer more flexibility to end users, since they are able
+to choose among many identity providers. Large web mail providers like
+Yahoo, Google, and MSN have all adopted OpenID
+\cite{Yah08,Sac08,WLOP08} and are already capable of serving as
+identity providers for hundreds of millions of users.
 
 While federated login systems like OpenID may streamline logins, they
 may create risks to user privacy. The core problem in both centralized
@@ -60,18 +59,17 @@ easily link together the various websites that the user visits. An
 IDP could, for example, release data about which sites users visited
 without user consent.
 
-In a federated system, users could avoid identity providers
-that abused privacy and choose to use reputable firms. Unfortunately,
+In a federated system, users could avoid identity providers that
+abused privacy and choose to use reputable firms. Unfortunately,
 honest identity providers may still be compromised and leak logs, or
-otherwise be compelled to reveal logs.
-
-Besides simply revealing which sites a user visits, IDPs often reveal
-personal information about users through extensions like OpenID
-attribute exchange (AX) \cite{AX} or simple registration (SREG)
-\cite{Sreg}. The goal of this exchange is typically to pass
-information like an email address, real name, or birthdate from an
-identity provider to a web site. Automatically obtaining these data
-can greatly streamline the user sign-up process for relying parties.
+otherwise be compelled to reveal logs. Besides simply revealing which
+sites a user visits, IDPs often reveal personal information about
+users through extensions like OpenID attribute exchange (AX) \cite{AX}
+or simple registration (SREG) \cite{Sreg}. The goal of this exchange
+is typically to pass information like an email address, real name, or
+birth date from an identity provider to a web site. Automatically
+obtaining these data can greatly streamline the user sign-up process
+for relying parties.
 
 Although most IDPs will prompt users whether they want to reveal this
 information, they could reveal whichever data they want to a relying
@@ -94,22 +92,19 @@ selective disclosure of user properties.
 \label{sec:fedlogin}
 
 Web users who want to use a particular website most often authenticate
-themselves directly to the site by entering a username and
-password as in Figure \ref{fig:passwd}. Maintaining many sets of user
-credentials across different sites carries a burden for the user, and can
-lead to password reuse.
-
-Websites must carry the burden of creating accounts, storing
-credentials, and authenticating users. Account creation, or
+themselves directly to the site by entering a user name and password as
+in Figure \ref{fig:passwd}. Maintaining many sets of user credentials
+across different sites carries a burden for the user, and can lead to
+password reuse. Websites must carry the burden of creating accounts,
+storing credentials, and authenticating users. Account creation, or
 ``on-boarding'', is often a large barrier to signing up new users. It
-is not uncommon for the over half of sign-up attempts to be
-abandoned. 
+is not uncommon for the over half of sign-up attempts to be abandoned.
 
 \begin{figure}
   \centering
   \includegraphics[scale=0.5]{figs/fig-passwd-color.pdf}
-  \caption{A typical  web login system where users log into websites
-    by entering site-specific credentials.}
+  \caption{A typical web login system where users log into websites by
+    entering site-specific credentials. }
   \label{fig:passwd}
 \end{figure}
 
@@ -129,8 +124,12 @@ authentication.
 \begin{figure}
   \centering
   \includegraphics[scale=0.5]{figs/fig-fedlog-color.pdf}
-  \caption{A federated login system: the relying party (RP) redirects
-  the user to her identity provider (IDP) for authentication.}
+  \caption{A federated login system: (1) The RP prompts the user
+    for an identity. (2) The user enters an identifier that specifies
+    an IDP. (3) The RP requests that the IDP authorize the user. (4)
+    The IDP prompts the user for her credentials. (5) The user
+    presents her credentials to the IDP. (6) The IDP returns the
+    result of the authorization to the RP.}
   \label{fig:fedlog}
 \end{figure}
 
@@ -144,12 +143,12 @@ Systems like Facebook Connect and OpenID 2.0 are able to offer
 one-click logins for relying parties, which greatly simplifies the
 login process. For example, Plaxo, a social networking and address
 book site, performed a two-click OpenID login experiment where 92\% of
-users successfully completed registration after starting the signup
+users successfully completed registration after starting the sign-up
 process \cite{Ki09}. In contrast, on-boarding abandonment rates of
 50\% are common for many websites.
 
 Accordingly, federated login systems are being adopted by a growing
-number of internet sites, particularly by large webmail providers and
+number of Internet sites, particularly by large web mail providers and
 social networks.  Several different federated login technologies have
 arisen over the years, such as Microsoft Passport (now Windows Live
 ID), OpenID, Facebook Connect, and SAML.
@@ -166,7 +165,7 @@ for user records.
 \subsection{OpenID: A web-based federated login system}
 
 OpenID is a popular federated login system that we focus on for a
-proof of concept implementaion. In OpenID, users can claim
+proof of concept implementation. In OpenID, users can claim
 identifiers in the form of URIs. To login to a website that supports
 OpenID, the user enters his OpenID URI and the RP redirects him to
 his identity provider's page. The IDP authenticates the user through
@@ -203,15 +202,14 @@ all, in OpenID and most other major single sign-on systems, a
 malicious identity provider could easily impersonate users to relying
 parties. However, even if an identity provider is not corrupt, there
 are privacy concerns for \emph{honest, but retentive} providers who
-may reveal user data due to a security breach or a legal
-subpoena.
+may reveal user data due to a security breach or a legal subpoena.
 
-The core privacy issue with widely-deployed federated login systems
-is that a user's identity can be correlated with the sites he logs
+The core privacy issue with widely-deployed federated login systems is
+that a user's identity can be correlated with the sites she logs
 into. For example, OpenID identity providers will authenticate users,
 then redirect them directly back to a relying party. This makes it
-trivial to know all the web sites a user logs into. The same
-is true for Live ID or Facebook Connect.
+trivial to know all the web sites a user logs into. The same is true
+for Live ID or Facebook Connect.
 
 One might develop a different federated login flow where a user acted
 as an intermediary between relying parties and identity providers. The
@@ -225,7 +223,7 @@ Alternatively, an identity provider could abstain from logging, could
 try to anonymize or delete identifying information, or could simply
 destroy logs completely. Logs are retained for many valid reasons
 including analytics, diagnostics, and security auditing. In practice,
-abstaining from logging is generally not a viable option.
+abstaining from logging is often not a viable option.
 
 Removing or anonymizing identifying information ex post facto is one
 option, but has proved difficult in practice. Supposedly anonymized
@@ -239,7 +237,7 @@ Another issue is that both logs anonymization and destruction may be
 subject to data retention laws that specify minimum retention periods
 \cite{EUDir}. IDPs may be legally compelled to collect identifying
 data and retain it for a minimum period. In some jurisdictions,
-authorities have broad powers to rapidly sieze these data, often
+authorities have broad powers to rapidly seize these data, often
 without user knowledge.
 
 Given these considerations, we will focus on privacy in a setting where:
@@ -256,7 +254,7 @@ Identity providers may have an interest in \emph{not} being able to
 link a particular user's identity to logins on a relying party. An
 identity provider may want to provably show that they cannot link
 logins on a relying party to a particular user. With this in mind, we
-informally define what it means for an idenity provider to be
+informally define what it means for an identity provider to be
 \emph{private} in Section \ref{sec:private-fed-login}. Section
 \ref{sec:pseudoid} propose a practical system that meets this
 definition.
@@ -273,7 +271,7 @@ We assume that identity providers have a set of users that can be
 thought of as ``real'' identities. Users may possess credentials which
 are presented to identity providers for authentication. If the credentials
 are valid, identity providers will return some identifier to a relying
-party. This identifier may be of any form, i.e. a ``real'' username, a
+party. This identifier may be of any form, i.e. a ``real'' user name, a
 pseudonym, a value derived from the credentials, or even a random
 value. In order to contrast these different behaviors, we will first
 state several informal properties.
@@ -287,7 +285,7 @@ return that value.
 
 One-wayness means that users actually ``own'' their identities and
 people cannot imitate them on relying parties, e.g. as with a familiar
-username/password login. A trivial example of an identity provider
+user name/password login. A trivial example of an identity provider
 that is \textit{not} one-way is one where an IDP will assert any
 identity without authorizing the user.  We'll refer to this as the
 ``Yes IDP''. Users of a Yes IDP could log into RPs with arbitrary
@@ -317,16 +315,15 @@ significant advantage in distinguishing the user being authenticated.
 
 Unlinkability is intended to capture the notion that an attacker who
 obtains access logs from an identity provider and relying party should
-not be able to tell which ``real'' user was logging in.
-
-OpenID identity providers are generally linkable in practice, although
-there are exceptions. An attacker obtaining a user's credentials or
-IDP access logs would be able to trivially see which user was
-associated with a particular identity on a relying party.
+not be able to tell which ``real'' user was logging in. OpenID
+identity providers are generally linkable in practice, although there
+are exceptions. An attacker obtaining a user's credentials or IDP
+access logs would be able to trivially see which user was associated
+with a particular identity on a relying party.
 
 Note that this property is not specific to OpenID or a flaw in the
 OpenID protocol. Instead, it's an artifact of how real world identity
-providers typically authenticate users: with usernames and
+providers typically authenticate users: with user names and
 passwords. For example, an attacker may observe ``Alice'' authenticate
 herself to an IDP and the identity ``Bob'' returned to a relying
 party; linking her real identity to her pseudonym.
@@ -348,7 +345,7 @@ setup, and a private identity provider used for sign-ons. The user has
 an account with the token service, which may be a persistent, ``real''
 identity like an email address. During setup, the user logs on to the
 token service using a familiar authentication scheme, such as entering
-a username and password.
+a user name and password.
 
 The user then requests an access token from the token service that is
 bound to a desired pseudonym. When logging into a relying party, the
@@ -366,23 +363,24 @@ property by employing \textit{blind signatures}.
 \label{section:blind-sigs}
 
 Traditional public key digital signature schemes \cite{DH76} consist
-of a private signing function $\sigma$ known only to the signer and a
+of a private signing function $S$ known only to the signer and a
 public verifying predicate $V$. Then for any message $m$ that is
 provided to the signer to be signed, a verifier can check that $V(m,
-\sigma(m))$ is true.
+S(m))$ is true. It is infeasible to produce the signature $S(m)$
+without knowledge of the signing function $S$.
 
 Blind signature systems \cite{Cha82} augment this traditional scheme
 with a blinding function $B$ and its inverse unblinding function
-$B^{-1}$, such that $B^{-1}(\sigma(B(m)) = \sigma(m)$ and both
+$B^{-1}$, such that $B^{-1}(S(B(m)) = S(m)$ and both
 functions are known only to a user getting a message signed.
 
-The user wishes to obtain a signature $\sigma(m)$ on some message
+The user wishes to obtain a signature $S(m)$ on some message
 $m$ without revealing the contents of $m$ to the signer. Thus, the
 user sends the blinded message, $B(m)$, to the signer. The blinded
 message leaks no information about $m$ to the signer. The signer then
-signs the blinded message and returns $\sigma(B(m))$ to the
+signs the blinded message and returns $S(B(m))$ to the
 user. Finally, the user unblinds this signed message to
-obtain $$B^{-1}(\sigma(B(m))) = \sigma(m),$$ a valid signature on $m$
+obtain $$B^{-1}(S(B(m))) = S(m),$$ a valid signature on $m$
 that can be publicly verified.
 
 One example of a blind signature system is Chaum's RSA blind signatures. In a
@@ -409,17 +407,20 @@ Figure \ref{fig:bss-setup}.
 
 During a setup phase, the user will visit the blind signer and login
 to an existing account. The user then selects a pseudonym that they
-want to use on a relying party. This pseudonym is bundled into an
-access token that the blind signer will sign.
+want to use on a relying party and a secret value. This pseudonym and
+random secret value are bundled into an access token that the blind
+signer will sign. That is, the user will prepare a token $T =
+(pseudonym, secret)$.
 
 To prevent the signer from being able to link a user with her
-pseudonym, the user first blinds the token before sending it to the
-blind signer. The blind signer will sign this token without knowing
-its contents and return it to the user. Upon receiving the singed
-token back from the service, the user unblinds it to obtain a signed
-token that contains the user's chosen pseudonym. Note that the blind
-signer will not see the user's pseudonym in the clear; it will only
-see the blinded token.
+pseudonym, the user first blinds the token $B(T)$ before sending it to
+the blind signer. The blind signer will sign this token without
+knowing its contents and return it to the user as $S(B(T))$. Upon
+receiving the singed token back from the service, the user unblinds it
+to obtain a signed token $S(T)$ that contains the user's chosen
+pseudonym and secret value. Note that the blind signer will not see
+the user's pseudonym or secret value in the clear; it will only see
+the blinded token.
 
 \begin{figure}
   \centering
@@ -450,7 +451,7 @@ is illustrated in Figure \ref{fig:bss-signon}.
 \begin{figure}
   \centering
   \includegraphics[scale=0.6]{figs/fig-bss-signon-color.pdf}
-  \caption{Identity Provider Signon with Blind Signed Access Token: (1) IDP asks
+  \caption{Identity Provider Sign-on with Blind Signed Access Token: (1) IDP asks
   users to authenticate (2) User supplies access token rather than true identity
   or credentials (3) IDP verifies whether BSS signed the token using BSS's
   public key.}
@@ -470,7 +471,7 @@ know which user.
   \caption{The user obtains an untraceable access token from the blind
     signature service prior to logging into a website. When his
     identity provider asks him to authenticate, he provides the access
-    token instead of a username or password. The identity provider, in
+    token instead of a user name or password. The identity provider, in
     turn, verifies that the BSS signed the token. If the token has
     been validly signed, the provider authenticates the user to the
     website he is trying to visit.}
@@ -478,26 +479,67 @@ know which user.
 \end{figure}
 \end{comment}
 
+Given a valid access token from the user, the IDP will compute a
+one-way, collision-resistant function $F$ on its value and return that
+as part of an identifier to the RP. For instance, if the access token
+contains $T = (pseudonym, secret)$ can then return $(pseudonym, F(T))$
+as the user's identifier. Given the properties of $F$, attackers will
+not be able to invert the value $F(T)$ to obtain $T$ or find a value
+$T'$ such that $F(T) = F(T')$.
+
+\subsection{Properties of PseudoID}
+
+We informally argue that PseudoID can meet the properties described in
+Section \ref{sec:private-fed-login}. 
+
+\begin{claim}[1]\textbf{PseudoID is one-way}
+  The access token $T$ that is presented by the user to the IDP will
+  contain a random secret value. The IDP will then compute a one-way,
+  collision-resistant function of that token $F(T)$ that is presented
+  as part of the user's identity. An attacker will only be able to
+  cause an IDP to return that same identity if they are either able to
+  learn the secret, invert $F(T)$, or find a colliding token value
+  $T'$ such that $F(T) = F(T')$. Thus, attackers will have no
+  significant ability to cause the IDP to return a given identity.
+\end{claim}
+
+
+\begin{claim}[2]\textbf{PseudoID is consistent}
+  The IDP will always return the same identifier for a given access
+  token. It's output is completely deterministic, and thus consistent.
+\end{claim}
+
+\begin{claim}[2]\textbf{PseudoID is unlinkable}
+  Suppose an attacker has all the logs of the blind signing service,
+  all blinded access tokens, and all unblinded access tokens used to
+  authenticate to the IDP. The attacker will win if they are able to
+  link a specific blinded access token to a specific unblinded access
+  token, i.e. revealing a user's identity. However, this is precisely
+  what blinding prevents. PsuedoID uses blinding in exactly the same
+  fashion as Chaum's untraceable payment scheme \cite{Cha82}. Thus,
+  PsuedoID is unlinkable based on the properties of the blind
+  signature scheme.
+\end{claim}
+
 \subsection{OpenID with PseudoID}
 
-PseudoID is practical to implement in a web-based model appropriate
-for OpenID. We have implemented a proof of concept blind signing
-service and identity provider available at
-\url{http://pseudoid.net}. The proof of concept blind signer is
-implemented as a web service. Users visit the blind signer and 
-prepare a blinded token signed with JavaScript (see Section
-\ref{subsec:caveats} for a discussion of some security caveats). 
+PseudoID is practical to implement in a web setting, such as for
+OpenID. We have implemented a proof of concept blind signing service
+and identity provider available at \textbf{http://pseudoid.net}. The
+proof of concept blind signer is implemented as a web service. Users
+visit the blind signer and prepare a blinded token signed with
+JavaScript (see Section \ref{subsec:caveats} for a discussion of some
+security caveats).
 
 The blind signer will blindly sign this value and return it to the
 user. This value is unblinded and stored as a cookie in the user's
-browser. This cookie will be set on the identity provider's domain.
-
-The identity provider itself may be slightly modified from existing
-OpenID providers. It simply needs to read an access token from a
-cookie on the user's browser, verify a signature on it, and return the
-pseudonym it contains to a relying party. From the user's perspective,
-this eliminates the need to retype a username and password on an
-identity provider.
+browser. This cookie will be set on the identity provider's
+domain. The identity provider itself may be slightly modified from
+existing OpenID providers. It simply needs to read an access token
+from a cookie on the user's browser, verify a signature on it, and
+return the pseudonym it contains to a relying party. From the user's
+perspective, this eliminates the need to retype a user name and
+password on an identity provider.
 
 PseudoID identity providers are fully compatible with existing OpenID
 relying parties. Existing relying parties do not have to change
@@ -509,7 +551,7 @@ authentication mechanism than most other identity providers, but it
 still participates in the same federated login flow outlined in Figure
 \ref{fig:fedlog}.
 
-\subsection{Caveats of the proof of concept Implementation}
+\subsection{Caveats of the proof of concept implementation}
 \label{subsec:caveats}
 
 The proof of concept PseudoID implementation stores a user's access
@@ -532,7 +574,7 @@ particular IP address. Anonymization on the network level is an
 independent risk and may be mitigated by the use of web proxies or
 anonymous browsing technology like Tor \cite{Tor}. 
 
-In practice, users are tracked more often by cookies than by IP 
+In practice, users are often tracked by cookies as well as by IP
 addresses. One risk of the proof of concept system is that a malicious
 blind signer or IDP may try to set tracking cookies on the user's
 browser while they are logged in with their real identity. Thus, a
@@ -553,28 +595,27 @@ federated login systems in general.
 \subsection{Simplified Cryptography in the Browser}
 
 Modern browsers are equipped with support for a broad range of
-cryptographic functionalities. Yet, it is difficult for a typical
-web application to make use of it. In the case of PseudoID,
-server-side JavaScript was used to blind and unblind tokens.
-
-Using JavaScript is both inefficient and insecure. Basic cryptographic
-functionality has to be reimplemented in JavaScript and interpreted,
-rather than using the native cryptographic libraries already available
-in the browser.
+cryptographic functionality to support SSL/TLS. Yet, it is difficult
+for a typical web application to make use of it. In the case of
+PseudoID, server-side JavaScript was used to blind and unblind
+tokens. Using JavaScript is both inefficient and insecure. Basic
+cryptographic functionality has to be reimplemented in JavaScript and
+interpreted, rather than using the native cryptographic libraries
+already available in the browser.
 
 There is also a question of where the JavaScript code comes from. If
-it is hosted on a server, it may later be substitued with malicious
+it is hosted on a server, it may later be substituted with malicious
 code without the user's knowledge. For example, if the host of the
 JavaScript code were compromised, an attacker could inject code to
 leak the user's identity.
 
-Browser crytpographic support could be made avaiable through
+Browser cryptographic support could be made available through
 a browser plug-in or extension, but this is a barrier to adoption and
 difficult to support on multiple platforms. PseudoID and many other
 applications could benefit from a simple, standardized, and
 cross-platform API to client-side cryptographic services.
 
-\subsection{Browser Storage and Cross-Domain Communcation}
+\subsection{Browser Storage and Cross-Domain Communication}
 
 Another practical challenge in the proof of concept implementation was
 communicating cryptographic tokens across domains subject to the
@@ -604,17 +645,15 @@ selective disclosure. There is a broad range of literature on this
 topic \cite{Cha85,CaLy01,CaLy04,CHL05,CaGr08}.
 
 The basic idea is that users will engage in a zero-knowledge proof
-with the blind signer. They will prove that the contents of
-blindly signed messages convey some meaningful data or have a proper
-semantic form. For example, the user may prove that a blindly signed
-message contains a bit value representing ``Is this user over 18 years
-of age?'' that is true for their real identity, without revealing any
-other information about the message.
-
-Another example use is obtaining a token with an expiration time in
-it. The user would prove to the blind signer that a blinded message
-contains a valid expiration time, without revealing any other
-knowledge of the message.
+with the blind signer. They will prove that the contents of blindly
+signed messages convey some meaningful data or have a proper semantic
+form. For example, the user may prove that a blindly signed message
+contains a bit value representing ``Is this user over 18 years of
+age?'' that is true for their real identity, without revealing any
+other information about the message. Another example use is obtaining
+a token with an expiration time in it. The user would prove to the
+blind signer that a blinded message contains a valid expiration time,
+without revealing any other knowledge of the message.
 
 By allowing tokens to have these types of semantics, identity
 providers will be able to offer more fine-grained access policies. In
@@ -634,3 +673,10 @@ PseudoID implementation has.
 \bibliographystyle{splncs03}
 
 \end{document}
+
+% LocalWords:  PseudoID login OpenID SSO IDP logins RPs Facebook IDPs Google de
+% LocalWords:  MSN SREG CAPTCHA Plaxo SAML URIs anonymized anonymize facto ons
+% LocalWords:  anonymizing Netflix anonymization wayness unlinkable unblinding
+% LocalWords:  Unlinkability unblinds Chaum's RSA mr unblind BSS signer's BSS's
+% LocalWords:  unblinded PsuedoID IP JavaScript SSL TLS API IDP's iframe
+% LocalWords:  pseudoid

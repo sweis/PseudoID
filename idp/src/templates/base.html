@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-  <title>{% block title %} PseudoID: Private OpenID {% endblock %}</title>
+  <title>{% block title %} PseudoID {% endblock %}</title>
   <link rel="openid2.provider openid.server"
         href="{{ request_url_without_params }}" />
   <link href="/static/base.css" rel="stylesheet" type="text/css"/>
@@ -15,8 +15,8 @@
 
 {% block header %}
 <div id="header">
-  <img id ="openid-logo" alt="OpenID" src="/static/openid-logo.png" />
-  <p id="title">PseudoID: Private OpenID
+<!--  <img id ="openid-logo" alt="OpenID" src="/static/openid-logo.png" />-->
+  <p id="title">PseudoID: Enhancing Privacy for Federated Login
   </p>
 </div>
 {% endblock %}

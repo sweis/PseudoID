@@ -1,8 +1,33 @@
 {% extends "base.html" %}
 
 {% block body %}
+
 <p style="color:red">WARNING: Prototype still under development, meant to be
 used primarily for demo purposes.</p>
+
+<div class="top">
+  How It Works
+</div>
+
+<p> 
+  The PseudoID private identity provider authenticates users anonymously by
+  piggbyacking on the PseudoID blind signer.
+</p>
+<p>    
+    When you create a nickname at the blind signer, you are asked to login
+  normally using your google account. Once the blind signer knows that you are
+  a valid user, it issues you an access token with your chosen nickname.
+</p>
+<p>
+    The token is blindly signed by the signer such that PseudoID will later
+  recognize it as being created by a valid user, but will not be able to tell
+  <i>which</i> user created the token.
+</p>
+<p> Read more about the system in our 
+<a href="http://docs.google.com/viewer?url=http%3A%2F%2Fwww.pseudoid.net%2Fstatic%2Fpseudoid.pdf">paper</a>.
+</p>
+
+<div class="top">Try It!</div>
 
 <p>
 You can use this private identity provider to anonymously log into any 
@@ -37,21 +62,13 @@ website that supports <nobr><a href="http://openid.net/">
   </li>
 </ol>
 
-<div class="top">
-  How It Works
-</div>
+<div class="top">Credits</div>
 
-<p> 
-  The PseudoID private identity provider authenticates users anonymously by
-  piggbyacking on the PseudoID blind signer.
-    
-    When you create a nickname at the blind signer, you are asked to login
-  normally using your google account. Once the blind signer knows that you are
-  a valid user, it issues you an access token with your chosen nickname.
-  
-    The token is blindly signed by the signer such that PseudoID will later
-  recognize it as being created by a valid user, but will not be able to tell
-  <i>which</i> user created the token.
+<p>
+PseudoID was designed and developed by Arkajit Dey 
+(<a href="http://twitter.com/arkajit">@arkajit</a>) and
+<a href="http://saweis.net/">Steve Weis</a> 
+(<a href="http://twitter.com/sweis">@sweis</a>). 
 </p>
 
 {% endblock %}

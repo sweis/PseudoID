@@ -31,8 +31,8 @@ _DEBUG = True # Set to True if stack traces should be shown in the browser, etc.
 # the global openid server instance
 oidserver = None
 
-_TESTING = True # Set to true during testing, to use localhost
-HOST = 'http://private-idp.appspot.com'
+_TESTING = False # Set to true during testing, to use localhost
+HOST = 'http://pseudoid.net'
 if _TESTING:
   HOST = 'http://localhost:9999'
 

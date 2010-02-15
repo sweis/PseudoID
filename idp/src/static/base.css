@@ -13,10 +13,13 @@
  * limitations under the License.
  */
 
-body {
-  background-color: white;
+body  {
+  font-family: "Verdana", "Arial", "Helvetica", "sans-serif";
+  font-size: 12pt;
   color: black;
-  margin: 10px;
+  background-color: white;
+  margin-left: 7%;
+  margin-right: 7%;
 }
 
 body, input, textarea {

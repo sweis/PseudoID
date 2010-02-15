@@ -2,41 +2,31 @@
 
 {% block body %}
 
-<p style="color:red">WARNING: Prototype still under development, meant to be
-used primarily for demo purposes.</p>
-
-<div class="top">
+<h2>
   How It Works
-</div>
+</h2>
 
-<table>
-<tr>
-<td>
-<a href="http://docs.google.com/viewer?url=http%3A%2F%2Fwww.pseudoid.net%2Fstatic%2Fpseudoid.pdf">
-	<img src="/static/pseudoid-cover.gif" width="250" height="325"></img>
-</a>
-</td>
-<td>
-<p> 
-  The PseudoID private identity provider authenticates users anonymously by
-  piggbyacking on the PseudoID blind signer.
-</p>
-<p>    
-    When you create a nickname at the blind signer, you are asked to login
-  normally using your google account. Once the blind signer knows that you are
-  a valid user, it issues you an access token with your chosen nickname.
-</p>
 <p>
-    The token is blindly signed by the signer such that PseudoID will later
-  recognize it as being created by a valid user, but will not be able to tell
-  <i>which</i> user created the token.
+  PseudoID is a privacy enhancement for federated login systems that
+  is backward-compatible
+  with <a href="http://openid.net">OpenID</a>. PseudoID is designed to
+  protect users from disclosre of private login data held by federated
+  identity providers. It is based on a cryptographic tool called a 
+  <a href="http://en.wikipedia.org/wiki/Blind_signature">blind
+  signature</a>, which are used in a manner similar
+  to <a href="http://www.chaum.com">David Chaum's</a> classic
+  untracable payment scheme. PseudoID was designed and developed
+  by <a href="http://twitter.com/arkajit">Arkajit Dey</a>
+  and <a href="http://saweis.net/">Stephen Weis</a>.
 </p>
-<p> 
-	Learn more about our system by reading our paper (left) or watching
-	our short explanatory video (right).
-</p>
-</td>
-<td>
+
+<h2>
+  Introductory video
+</h2>
+
+<p>Watch
+  a <a href="http://www.youtube-nocookie.com/v/fCBPuGsO_I4">short
+    introductory video about PseudoID</a></p>
 <object width="480" height="385">
 	<param name="movie" value="http://www.youtube-nocookie.com/v/fCBPuGsO_I4&hl=en_US&fs=1&"></param>
 	<param name="allowFullScreen" value="true"></param>
@@ -46,16 +36,28 @@ used primarily for demo purposes.</p>
 		   width="480" height="385">
 	</embed>
 </object>
-</td>
-</tr>
-</table>
 
-<div class="top">Try It!</div>
+<h2>
+  Download the paper
+</h2>
+
+<p>
+<a href="http://www.pseudoid.net/static/pseudoid.pdf">Download the
+  PseudoID paper</a> as a PDF. 
+</p>
+<div>
+<a href="http://docs.google.com/viewer?url=http%3A%2F%2Fwww.pseudoid.net%2Fstatic%2Fpseudoid.pdf"><img src="/static/pseudoid-cover.gif" width="250" height="325"></a> 
+</div>
+
+<h2>Try a proof of concept Identity Provider</h2>
+
+<p style="color:red">WARNING: Prototype still under development, meant to be
+used primarily for demo purposes.</p>
 
 <p>
 You can use this private identity provider to anonymously log into any 
 website that supports <nobr><a href="http://openid.net/">
- <img src="/static/openid-icon.png"/>OpenID</a></nobr>! 
+ <img src="/static/openid-icon.png"/>OpenID</a></nobr>. 
  Just follow these simple steps.
 </p>
 
@@ -85,13 +87,5 @@ website that supports <nobr><a href="http://openid.net/">
   </li>
 </ol>
 
-<div class="top">Credits</div>
-
-<p>
-PseudoID was designed and developed by Arkajit Dey 
-(<a href="http://twitter.com/arkajit">@arkajit</a>) and
-<a href="http://saweis.net/">Steve Weis</a> 
-(<a href="http://twitter.com/sweis">@sweis</a>). 
-</p>
 
 {% endblock %}

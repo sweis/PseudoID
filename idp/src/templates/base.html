@@ -4,7 +4,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-  <title>{% block title %} PseudoID {% endblock %}</title>
+  <meta name="keywords"
+        content="privacy, federated login, OpenID, security, cryptography,
+                 blind signatures,Steve Weis, Arkajit Dey, Stephen Weis" /> 
+  <meta name="description" content="Information about PseudoID, a privacy-preserving enhancement for federated login systems" /> 
+  <title>{% block title %} PseudoID: Enhancing Privacy for Federated Login {% endblock %}</title>
   <link rel="openid2.provider openid.server"
         href="{{ request_url_without_params }}" />
   <link href="/static/base.css" rel="stylesheet" type="text/css"/>
@@ -14,11 +18,7 @@
 <body {% block bodyattributes %}{% endblock %}>
 
 {% block header %}
-<div id="header">
-<!--  <img id ="openid-logo" alt="OpenID" src="/static/openid-logo.png" />-->
-  <p id="title">PseudoID: Enhancing Privacy for Federated Login
-  </p>
-</div>
+<h1>PseudoID: Enhancing Privacy for Federated Login</h1>
 {% endblock %}
 
 <div id="body">

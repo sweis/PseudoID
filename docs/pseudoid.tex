@@ -1,4 +1,4 @@
-\documentclass{llncs}
+\documentclass[11pt]{llncs}
 
 \usepackage{times}
 \usepackage{graphicx}
@@ -24,7 +24,7 @@ Google Inc., Mountain View, CA, USA 94043}
   federated login system named OpenID. We also propose several
   extensions and discuss some of the practical challenges that must be
   overcome to further protect user privacy in federated login systems.
-  \footnote{Draft in submission, Feb. 2010}
+  \footnote{Draft in submission, Apr. 2010}
 \end{abstract}
 
 \section{Introduction}
@@ -54,7 +54,7 @@ all adopted OpenID \cite{Yah08,Sac08,WLOP08} and are already capable
 of serving as identity providers for hundreds of millions of users.
 
 While federated login systems like OpenID may streamline logins, they
-may create risks to user privacy. The core problem in both centralized
+also create risks to user privacy. The core problem in both centralized
 and federated login systems is that all user logins to relying party
 web sites must flow through an identity provider. A user's identity
 provider can easily link together the various websites that the user
@@ -74,8 +74,8 @@ birth date from an identity provider to a web site. Automatically
 obtaining these data can greatly streamline the user sign-up process
 for relying parties.
 
-Although most identity providers will prompt users whether they want
-to reveal this information, identity providers could reveal whichever
+Although most identity providers will prompt users asking whether they
+want to reveal this information, identity providers could reveal whichever
 data they want to a relying party. Thus, there is no way for a user to
 \emph{selectively disclose} certain properties (e.g. age, gender,
 etc.) about themselves to a relying party. Much work has gone into
@@ -99,11 +99,12 @@ user properties.
 Web users who want to use a particular website most often authenticate
 themselves directly to the site by entering a user name and password as
 in Figure \ref{fig:passwd}. Maintaining many sets of user credentials
-across different sites carries a burden for the user and can lead to
-password reuse. Websites must carry the burden of creating accounts,
+across different sites creates a burden for the user and can lead to
+password reuse. Websites, in turn, are burdened with the unwanted
+responsibility of creating accounts,
 storing credentials, and authenticating users. Account creation, or
 ``on-boarding'', is often a large barrier to signing up new users. It
-is not uncommon for the over half of sign-up attempts to be abandoned.
+is not uncommon for over half of sign-up attempts to be abandoned.
 
 \begin{figure}
   \centering
@@ -254,7 +255,7 @@ Given these considerations, we will focus on privacy in a setting where:
 
 There are several real-world risks where \emph{honest, but retentive}
 identity providers may threaten user privacy. One risk is simply if
-the provider were compromised and logs were leaked by an
+the provider were compromised and logs were leaked to an
 attacker. Another risk is for providers operating in jurisdictions
 where logs may be seized without due legal process.
 
@@ -264,7 +265,7 @@ identity provider may want to provably show that they cannot link
 logins on a relying party to a particular user. With this in mind, we
 informally define what it means for an identity provider to be
 \emph{private} in Section \ref{sec:private-fed-login}. Section
-\ref{sec:pseudoid} propose a practical system that meets this
+\ref{sec:pseudoid} proposes a practical system that meets this
 definition.
 
 \section{Properties of Private Federated Login}
@@ -513,11 +514,11 @@ Section \ref{sec:private-fed-login}.
 
 \begin{claim}[2]\textbf{PseudoID is consistent}
   The private identity provider will always return the same identifier
-  for a given access token. It's output is completely deterministic,
+  for a given access token. Its output is completely deterministic,
   and thus consistent.
 \end{claim}
 
-\begin{claim}[2]\textbf{PseudoID is unlinkable}
+\begin{claim}[3]\textbf{PseudoID is unlinkable}
   Suppose an attacker has all the logs of the blind signing service,
   all blinded access tokens, and all unblinded access tokens used to
   authenticate to the IDP. The attacker will win if they are able to
@@ -536,7 +537,7 @@ OpenID. We have implemented a proof of concept blind signing service
 and identity provider available at \url{http://pseudoid.net}. The
 proof of concept blind signer is implemented as a web service. Users
 visit the blind signer and prepare a blinded token signed with
-JavaScript (see Section \ref{subsec:caveats} for a discussion of some
+JavaScript (see Section \ref{sec:extns} for a discussion of some
 security caveats).
 
 The blind signer will blindly sign this value and return it to the
@@ -559,53 +560,105 @@ authentication mechanism than most other identity providers, but it
 still participates in the same federated login flow outlined in Figure
 \ref{fig:fedlog}.
 
-\subsection{Caveats of the proof of concept implementation}
-\label{subsec:caveats}
+%\subsection{Limitiations of the proof of concept implementation}
+%\label{subsec:caveats}
 
-The proof of concept PseudoID implementation stores a user's access
-tokens as cookies in the browser. This is not the ideal solution. Users 
-who clear cookies frequently or use a private browsing mode would
-lose their blinded access token. Cookies are also set in a
-single browser, and thus it would be complicated to extend a user's
-pseudonym across different machines.
+\section{Extensions and Future Work}
+\label{sec:extns}
 
-There is also a security issue with setting a cookie on the identity
-provider's domain. JavaScript executing on one domain cannot set a
-cookie on another. The proof of concept PseudoID implementation must
+Our goal in creating a proof of concept implementation of PseudoID
+has been to demonstrate the feasibility of creating and using
+pseudonyms within the framework of existing federated login
+technologies. We've strived to keep our prototype as minimal as
+possible and accordingly opted for simplicity over optimality
+in several important, but tangential, design choices. In this section,
+we acknowledge some of the limitations of these choices and the
+extensions we can make to overcome them and expand on our simple
+prototype. Additionally, we discuss some remaining privacy issues that
+plague federated login systems in general.
+
+\subsection{Token Storage}
+
+In PseudoID, a user's access tokens may be thought of as the
+``keys'' to their identity. This key can be used to ``unlock''
+or divulge aspects of a person's real identity (e.g. whether they
+are over 18, are male, have a valid U.S. address, etc...) without
+revealing their complete identity (i.e. this is John Doe with 
+Social Security number 123 who lives in CA). The key is instead
+associated with the person's pseudonym or chosen persona.
+
+Determining how to effectively store these tokens
+is an important prerequisite to deploying a full implementation of
+a private federated login system such as PseudoID. But it is
+still secondary to the question of how to create and use such
+tokens within existing technologies which is what we have chosen
+to focus on instead. Thus, in the interest of simplicity,
+we have deferred answering the question of token storage to
+future research.
+
+As such, our proof of concept implementations uses a non-ideal,
+but passable, medium for token storage: browser cookies. Some of
+the drawbacks of this approach are that some users may clear cookies
+frequently or use a private browsing mode which prevents their
+creation. Additionally, tokens stored as cookies are not easily
+transferable to a user's other machines. This makes it harder to
+extend a user's pseudonym across multiple machines. 
+
+We should note, however, that the issue of
+transferability is not simply an artifact of our implementation, but
+rather an unavoidable side effect of our goal of unlinkability. If we
+truly do not want to have pieces of our identity be linkable via
+a central repository, we will need to handle the distribution of
+the tokens by some other mechanism such as by individually ``installing''
+the tokens on each device we wish to use it on.
+
+\subsection{Token Accessibility}
+
+There is also the issue of who should be able to view a user's tokens. If
+the user just hands them out to any party that wants to authenticate him,
+he enables them to impersonate him with the tokens. For our
+proof-of-concept implementation, we adopted the simplest stance that
+the user only wants to show his tokens to his private identity provider.
+In federated login systems, the user is already trusting his identity provider
+so this adds no extra layer of trust.
+% Ultimately, we might want something like certs? you have to install
+% them everytime too right?
+
+% or use ZKPs to prove that I have the token without divulging it
+% this is to prevent malicious BSSes
+
+Since we are storing tokens in cookies, we run up against the security
+issue with setting a cookie on the identity provider's domain so that
+only they can read it. By the \emph{same-origin policy}, JavaScript
+executing on one domain cannot set a
+cookie on another. 
+
+The proof of concept implementation must
 make a call to the identity provider to set an unblinded cookie during
 the setup phase. This means that access logs on the blind signer and
 the identity provider could be joined to correlate the user's login
-with the value that was set as a cookie. 
+with the value that was set as a cookie.
 
-Even if logins are private, user requests can still be tied to a
-particular IP address. Anonymization on the network level is an
-independent risk and may be mitigated by the use of web proxies or
-anonymous browsing technology like Tor \cite{Tor}. 
+To rectify this situation, PseudoID could benefit from a more flexible
+browser storage model than
+cookies, and the means to pass messages from one domain to another
+using the browser as an intermediary. Several features proposed in
+HTML 5 may help facilitate this \cite{HTML5}.
 
-In practice, users are often tracked by cookies as well as by IP
-addresses. One risk of the proof of concept system is that a malicious
-blind signer or identity provider may try to set tracking cookies on
-the user's browser while they are logged in with their real
-identity. Thus, a user would need to scrub all cookies except their
-access token from their browser. This is not practical from a
-usability standpoint. Another issue is that blinding and unblinding is
-being done with JavaScript in the user's browser. This code must be
-trusted, otherwise it could leak their identity.
-
-\section{Extensions and Future Work}
-
-The caveats of the proof of concept PseudoID implementation make it
-impractical for general use. There are both unresolved usability and
-security issues which would need to be addressed in it and private
-federated login systems in general.
+Alternatively, we can side-step the cross-domain communication
+issue entirely by accepting some additional complexity such
+as encrypting our tokens with our provider's public key or
+enabling the user to prove
+his possession of the token via zero-knowledge proofs.
 
 \subsection{Simplified Cryptography in the Browser}
 
 Modern browsers are equipped with support for a broad range of
 cryptographic functionality to support SSL/TLS. Yet, it is difficult
 for a typical web application to make use of it. In the case of
-PseudoID, server-side JavaScript was used to blind and unblind
-tokens. Using JavaScript is both inefficient and insecure. Basic
+PseudoID, server-side JavaScript was the most convenient method
+to blind and unblind tokens. But using JavaScript is both inefficient
+and insecure. Basic
 cryptographic functionality has to be reimplemented in JavaScript and
 interpreted, rather than using the native cryptographic libraries
 already available in the browser.
@@ -622,25 +675,39 @@ difficult to support on multiple platforms. PseudoID and many other
 applications could benefit from a simple, standardized, and
 cross-platform API to client-side cryptographic services.
 
-\subsection{Browser Storage and Cross-Domain Communication}
+%For our implementation, the simplest way of providing blinding
+%and unblinding functions for the user was through JavaScript
+%in the browser. We acknowledge that this code must be served
+%from a trusted source, lest it perform malicious functions
+%instead (e.g. using an identity blinding function). This is also
+%a non-critical limitation that would be overcome by integrating
+%the blinding functions into the already trusted browser, a 
+%potential future step that was not essential to the goal of
+%our proof of concept implementation.
 
-Another practical challenge in the proof of concept implementation was
-communicating cryptographic tokens across domains subject to the
-constraints of the \emph{same-origin policy}. In this case, a page on
-the blind signer's domain cannot set a cookie on a different domain.
+% only necessary for bad BSSes, but if that's true, you're in worse trouble
 
-This was a difficulty because we wanted to set an \textit{unblinded}
-token that was readable from the identity provider's domain, but not visible to the
-blind signer. The workaround was to load a hidden cross-domain
-iframe. This technique was used to allow the blind signer to set a
-cookie on the identity provider's domain. That represents a privacy
-risk, since it would be easy to correlate logs between the blind
-signer and the identity provider.
+\subsection{Orthogonal Privacy Risks}
 
-PseudoID could benefit from a more flexible browser storage model than
-cookies, and the means to pass messages from one domain to another
-using the browser as an intermediary. Several features proposed in
-HTML 5 may help facilitate this \cite{HTML5}.
+Even if logins are private, users can still be tracked
+in other ways, by IP addresses or cookies. Anonymization on the network
+level is an
+independent risk and may be mitigated by the use of web proxies or
+anonymous browsing technology like Tor \cite{Tor}.
+ 
+But there is still the risk in the proof of concept system that a malicious
+blind signer or identity provider may try to set tracking cookies on
+the user's browser while they are logged in with their real
+identity. To mitigate this risk, a user would need to scrub all cookies
+except their access token from their browser which would be impractical
+from a usability standpoint. 
+
+But, realistically, the user is already
+accepting this risk by trusting their identity provider as they do
+whenever they use any federated login system. If his identity provider
+is malicious, the user has larger concerns such as whether the provider
+is impersonating them to relying parties. Thus, as we have before,
+we will continue to assume an honest provider which renders this concern moot. 
 
 \subsection{Selective Disclosure}
 
@@ -673,8 +740,40 @@ From a web-based implementation standpoint, performing zero-knowledge
 proofs in the browser requires better support for both cryptography
 and storing persistent values. While it is possible to implement
 zero-knowledge proof systems with a JavaScript and cookie approach,
-this would have the same security issues that the proof of concept
+this would have the same limitations that the proof of concept
 PseudoID implementation has.
+
+%\section{Extensions and Future Work}
+
+%The caveats of the proof of concept PseudoID implementation make it
+%impractical for general use. There are both unresolved usability and
+%security issues which would need to be addressed in it and private
+%federated login systems in general.
+
+%\subsection{Simplified Cryptography in the Browser}
+
+%\subsection{Browser Storage and Cross-Domain Communication}
+
+%\subsection{Selective Disclosure}
+
+\section{Conclusion}
+
+We have identified a key privacy concern with federated login systems,
+that they allow identity providers to link a user's identity
+and track them across visits to multiple websites. To address this
+concern, we have proposed a model of a private federated login
+system that preserves the convenience of existing federated login
+systems while adding the property of unlinkability.
+
+PseudoID is a proof-of-concept implementation of this model that
+demonstrates the feasibility of acheiving pseudonymity using
+blind signatures within existing federated login technologies
+like OpenID. It is a basic,
+minimal prototype that serves as the foundation for future
+work in establishing true selective disclosure in federated
+login. It also identifies several technology improvements
+needed to make private federated login systems more practical:
+better browser support for cryptography and persistent storage.
 
 \bibliography{pseudoid}
 \bibliographystyle{splncs03}

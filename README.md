@@ -1,0 +1,3 @@
+# PseudoID
+
+Federated login systems provide users a convenient single sign-on experience at the expense of allowing users to be tracked by their chosen identity providers. PseudoID addresses this privacy concern by allowing federated login users to login to websites using an untraceable pseudonym. The system is based on blind digital signatures and is compatible with a popular federated login system named OpenID. PseudoID may also be extended to permit selective disclosure of user attributes. The implementation of PseudoID also raises several practical problems that must be overcome to further protect the privacy of federated login users.
